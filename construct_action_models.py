@@ -92,8 +92,8 @@ def main():
     skip_actions = None
     prompt_version = 'model_blocksworld'
     include_additional_info = True
-    domain = 'logistics'  # 'household', 'logistics', 'tyreworld'
-    engine = 'gpt-4'  # 'gpt-4' or 'gpt-3.5-turbo'
+    domain = 'routing'  # 'household', 'logistics', 'tyreworld'
+    engine = 'gemma3:27b'  # 'gpt-4' or 'gpt-3.5-turbo'
     unsupported_keywords = ['forall', 'when', 'exists', 'implies']
     max_iterations = 3 if ('gpt-4' in engine and domain != 'household') else 2  # we only do 2 iteration in Household because there are too many actions, so the experiments are expensive to run
     max_feedback = 8 if 'gpt-4' in engine else 3    # more feedback doesn't help with other models like gpt-3.5-turbo
@@ -115,7 +115,7 @@ def main():
 
     # only GPT-4 is able to revise PDDL models with feedback message
     syntax_validator = PDDL_Syntax_Validator(obj_hierarchy_info, unsupported_keywords=unsupported_keywords) if 'gpt-4' in engine else None
-    pddl_translator = PDDL_Translator(domain, engine='gpt-4')
+    pddl_translator = PDDL_Translator(domain, engine='gemma3:27b')
 
     if actions is None:
         actions = list(action_desc.keys())

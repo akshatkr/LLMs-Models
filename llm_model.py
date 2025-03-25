@@ -1,24 +1,20 @@
-import os
 import traceback
-import ollama
 import tenacity
 from wrapt_timeout_decorator import timeout
 from ollama import Client
 
-
-# Set Ollama host
-os.environ["OLLAMA_HOST"] = "http://localhost:11434"
-
+# Initialize the Ollama client with the specified host
+client = Client(host="https://green.smu.edu.sg/ollamamitb")
 
 
-@timeout(dec_timeout=30, use_signals=False)
-def connect_ollama(engine, messages, temperature, max_tokens,
-                   top_p):
+@timeout(dec_timeout=120, use_signals=False)
+def connect_ollama(engine, messages, temperature, max_tokens, top_p):
     try:
-        return ollama.chat(
+        response = client.chat(
             model=engine,
             messages=messages
         )
+        return response
     except Exception as e:
         print(f'[ERROR] Ollama model error: {e}')
         raise e
@@ -53,7 +49,8 @@ class GPT_Chat:
                 temperature=self.temperature,
                 max_tokens=self.max_tokens,
                 top_p=self.top_p)
-            llm_output = response["message"]["content"]
+
+            llm_output = response.get("message", {}).get("content", "")
             if verbose:
                 print(f'[INFO] Connection success')
             conn_success = True
@@ -71,3 +68,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    #hh

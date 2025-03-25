@@ -1,9 +1,18 @@
 {
-    "hierarchy": {
-        "furnitureAppliance":[],
-        "householdObject": ["smallReceptacle"]
-    },
-    "requirements": [
-        "typing", "negative-preconditions", "disjunctive-preconditions", "conditional-effects", "equality"
-    ]
+  "hierarchy": {
+    "network": [],
+    "node": [
+      "start_node",
+      "end_node"
+    ],
+    "edge": [],
+    "robot": []
+  },
+  "requirements": [
+    "typing",
+    "negative-preconditions",
+    "disjunctive-preconditions",
+    "conditional-effects",
+    "equality"
+  ]
 }
