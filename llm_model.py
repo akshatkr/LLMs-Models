@@ -64,7 +64,7 @@ class GPT_Chat:
 
 
 def main():
-    llm_gpt = GPT_Chat(engine='gemma3:4b')
+    llm_gpt = GPT_Chat(engine='gemma3:27b')
     _, llm_output = llm_gpt.get_response('Do you know about PDDL language for planning?')
     print(llm_output)
 
