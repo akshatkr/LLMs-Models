@@ -5,4 +5,3 @@ The AI agent here is a robot tasked with finding a complete route through a netw
 -- The object types in this problem are node, edge, and network. The object type node represents the individual vertices of the network, while the object type edge represents the connections between pairs of nodes. The object type network represents the overall structure of the network that contains the nodes and edges.
 -- The robot’s task is to find a valid route that visits each node once, following the edges of the network, and ends at a node that completes the route.
 -- Important: The robot must ensure that NO node is visited more than once in the route.
--- Important: I also want to make sure that robot visits node n1 before node n2.

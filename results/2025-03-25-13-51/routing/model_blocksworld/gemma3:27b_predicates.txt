@@ -1,0 +1,6 @@
+(robot-at ?x - node): true if the robot is currently at node ?x
+(edge-exists ?x - node ?y - node): true if there is an edge connecting node ?x and node ?y
+(node-unvisited ?x - node): true if node ?x has not been visited yet
+(node-visited ?x - node): true if node ?x has been visited.
+(route-completed): true if the route is completed.
+(node-n1-visited-before-n2): true if node n1 is visited before node n2.

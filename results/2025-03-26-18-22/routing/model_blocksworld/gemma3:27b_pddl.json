@@ -1,0 +1,58 @@
+{
+    "move_to_node": {
+        "parameters": [
+            "?x - node: the current node",
+            "?y - node: the target node"
+        ],
+        "preconditions": "(and\n  (robot-at ?x)\n  (edge-exists ?x ?y)\n  (node-unvisited ?y)\n)",
+        "effects": "(and\n  (not (robot-at ?x))\n  (not (node-unvisited ?y))\n  (node-visited ?y)\n  (robot-at ?y)\n)",
+        "action_desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node. Once the robot moves  The robot can only move along edges that are part of the network. The robot must be at a valid node to begin moving.",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "there is an edge connecting node ?x to node ?y",
+            "node ?y has not been visited by the robot yet",
+            ""
+        ],
+        "translated_effects": [
+            "the robot is not at node ?x",
+            "node ?y has been visited",
+            "node ?y has been visited",
+            "the robot is at node ?y",
+            ""
+        ]
+    },
+    "visit_node": {
+        "parameters": [
+            "?x - node: the node to visit"
+        ],
+        "preconditions": "(and\n  (robot-at ?x)\n  (node-unvisited ?x)\n)",
+        "effects": "(and\n  (not (node-unvisited ?x))\n  (node-visited ?x)\n)",
+        "action_desc": "The robot visits the node, marking it as visited in the route. The robot can only visit each node once. This action cannot be performed if the node has already been visited. Visiting a node is necessary to complete the route.",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "node ?x has not been visited by the robot yet",
+            ""
+        ],
+        "translated_effects": [
+            "the node ?x has been visited by the robot",
+            "the node ?x has been visited by the robot",
+            ""
+        ]
+    },
+    "end_route": {
+        "parameters": [],
+        "preconditions": "(and\n  (robot-at ?x)\n  (all-nodes-visited)\n)",
+        "effects": "(and\n  (not (all-nodes-visited))\n  (route-completed)\n)",
+        "action_desc": "The robot completes its route by reaching the last node in the path. Executing this action makes a flag allVisited as true. The flag allVisited must be false in the begining The robot must have visited all nodes before performing this action. This action signifies the completion of the route.",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "all nodes have been visited by the robot",
+            ""
+        ],
+        "translated_effects": [
+            "the robot has not visited all nodes",
+            "the robot has completed its route",
+            ""
+        ]
+    }
+}

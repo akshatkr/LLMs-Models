@@ -1,0 +1,29 @@
+{
+    "move_to_node": {
+        "predicate_prompt": "You can create and define new predicates, but you may also reuse the following predicates:\n1. (robot-at ?x - node): true if the robot is currently at node ?x\n2. (edge-exists ?x - node ?y - node): true if there is an edge connecting node ?x and node ?y\n3. (node-unvisited ?x - node): true if node ?x has not been visited yet\n4. (node-visited ?x - node): true if node ?x has been visited.\n5. (route-completed): true if the route is completed.",
+        "action_desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node. The robot can only move along edges that are part of the network. The robot must be at a valid node to begin moving.",
+        "iter_1": {
+            "llm_output": "1. ?x - node: the current node\n2. ?y - node: the target node\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (edge-exists ?x ?y)\n   (node-unvisited ?y)\n)\n```\n\nEffects:\n```\n(and\n   (not (robot-at ?x))\n   (robot-at ?y)\n   (not (node-unvisited ?y))\n   (node-visited ?y)\n)\n```\n\nNew Predicates:\nNo newly defined predicate"
+        },
+        "llm_output": "1. ?x - node: the current node\n2. ?y - node: the target node\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (edge-exists ?x ?y)\n   (node-unvisited ?y)\n)\n```\n\nEffects:\n```\n(and\n   (not (robot-at ?x))\n   (robot-at ?y)\n   (not (node-unvisited ?y))\n   (node-visited ?y)\n)\n```\n\nNew Predicates:\nNo newly defined predicate",
+        "new_predicates": []
+    },
+    "visit_node": {
+        "predicate_prompt": "You can create and define new predicates, but you may also reuse the following predicates:\n1. (robot-at ?x - node): true if the robot is currently at node ?x\n2. (edge-exists ?x - node ?y - node): true if there is an edge connecting node ?x and node ?y\n3. (node-unvisited ?x - node): true if node ?x has not been visited yet\n4. (node-visited ?x - node): true if node ?x has been visited.\n5. (route-completed): true if the route is completed.",
+        "action_desc": "The robot visits the node, marking it as visited in the route. The robot can only visit each node once. This action cannot be performed if the node has already been visited. Visiting a node is necessary to complete the route.",
+        "iter_1": {
+            "llm_output": "1. ?x - node: the node to visit\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (node-unvisited ?x)\n)\n```\n\nEffects:\n```\n(and\n   (not (node-unvisited ?x))\n   (node-visited ?x)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n"
+        },
+        "llm_output": "1. ?x - node: the node to visit\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (node-unvisited ?x)\n)\n```\n\nEffects:\n```\n(and\n   (not (node-unvisited ?x))\n   (node-visited ?x)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n",
+        "new_predicates": []
+    },
+    "end_route": {
+        "predicate_prompt": "You can create and define new predicates, but you may also reuse the following predicates:\n1. (robot-at ?x - node): true if the robot is currently at node ?x\n2. (edge-exists ?x - node ?y - node): true if there is an edge connecting node ?x and node ?y\n3. (node-unvisited ?x - node): true if node ?x has not been visited yet\n4. (node-visited ?x - node): true if node ?x has been visited.\n5. (route-completed): true if the route is completed.",
+        "action_desc": "The robot completes its route by reaching the last node in the path. Precondition is that all nodes have been visited exactly once. The robot must have visited all nodes before performing this action. This action signifies the completion of the route.",
+        "iter_1": {
+            "llm_output": "```\n?x - node: the node where the robot completes the route\n\nPreconditions:\n```\n(and\n   (forall (?n - node) (node-visited ?n))\n   (robot-at ?x)\n)\n```\n\nEffects:\n```\n(and\n   (route-completed)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n```"
+        },
+        "llm_output": "```\n?x - node: the node where the robot completes the route\n\nPreconditions:\n```\n(and\n   (forall (?n - node) (node-visited ?n))\n   (robot-at ?x)\n)\n```\n\nEffects:\n```\n(and\n   (route-completed)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n```",
+        "new_predicates": []
+    }
+}

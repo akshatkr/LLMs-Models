@@ -1,0 +1,108 @@
+
+
+####################
+Action: move_to_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+No predicate has been defined yet
+--------------------
+--------------------
+```
+1. ?from_node - node: the node the robot is currently at
+2. ?to_node - node: the node the robot is moving to
+
+Preconditions:
+```
+(and
+   (robot-at ?from_node)
+   (edge-exists ?from_node ?to_node)
+   (not (node-visited ?to_node))
+)
+```
+
+Effects:
+```
+(and
+   (not (robot-at ?from_node))
+   (robot-at ?to_node)
+   (node-visited ?to_node)
+)
+```
+
+New Predicates:
+1. (robot-at ?x - node): true if the robot is currently at node ?x
+2. (edge-exists ?x - node ?y - node): true if an edge exists between node ?x and node ?y
+3. (node-visited ?x - node): true if the node ?x has been visited by the robot
+
+
+
+####################
+Action: visit_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (robot-at ?x - node): true if the robot is currently at node ?x
+2. (edge-exists ?x - node ?y - node): true if an edge exists between node ?x and node ?y
+3. (node-visited ?x - node): true if the node ?x has been visited by the robot
+--------------------
+--------------------
+1. ?x - node: the node to visit
+
+Preconditions:
+```
+(and
+   (robot-at ?x)
+   (not (node-visited ?x))
+)
+```
+
+Effects:
+```
+(and
+   (node-visited ?x)
+)
+```
+
+New Predicates:
+No newly defined predicate
+
+
+
+####################
+Action: end_route
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (robot-at ?x - node): true if the robot is currently at node ?x
+2. (edge-exists ?x - node ?y - node): true if an edge exists between node ?x and node ?y
+3. (node-visited ?x - node): true if the node ?x has been visited by the robot
+--------------------
+--------------------
+1. ?x - node: the node where the robot completes the route
+
+Preconditions:
+```
+(and
+   (forall (?n - node) (node-visited ?n))
+)
+```
+
+Effects:
+```
+(and
+   (route-completed)
+)
+```
+
+New Predicates:
+1. (route-completed): true if the route is completed.
+
+
+--------------------
+Extracted predicates:
+
+1. (robot-at ?x - node): true if the robot is currently at node ?x
+2. (edge-exists ?x - node ?y - node): true if an edge exists between node ?x and node ?y
+3. (node-visited ?x - node): true if the node ?x has been visited by the robot
+4. (route-completed): true if the route is completed.

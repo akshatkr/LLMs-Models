@@ -1,0 +1,34 @@
+{
+    "move_to_node": {
+        "action_desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node. Once the robot moves  The robot can only move along edges that are part of the network. The robot must be at a valid node to begin moving.",
+        "llm_output": "1. ?x - node: the current node\n2. ?y - node: the target node\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (edge-exists ?x ?y)\n   (node-unvisited ?y)\n)\n```\n\nEffects:\n```\n(and\n   (not (robot-at ?x))\n   (not (node-unvisited ?y))\n   (node-visited ?y)\n   (robot-at ?y)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "there is an edge connecting node ?x to node ?y",
+            "node ?y has not been visited by the robot yet",
+            ""
+        ],
+        "translated_effects": [
+            "the robot is not at node ?x",
+            "node ?y has been visited",
+            "node ?y has been visited",
+            "the robot is at node ?y"
+        ],
+        "annotation": []
+    },
+    "visit_node": {
+        "action_desc": "The robot visits the node, marking it as visited in the route. The robot can only visit each node once. This action cannot be performed if the node has already been visited. Visiting a node is necessary to complete the route.",
+        "llm_output": "1. ?x - node: the node to visit\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (node-unvisited ?x)\n)\n```\n\nEffects:\n```\n(and\n   (not (node-unvisited ?x))\n   (node-visited ?x)\n)\n```\n\nNew Predicates:\nNo newly defined predicate",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "node ?x has not been visited by the robot yet",
+            ""
+        ],
+        "translated_effects": [
+            "the node ?x has been visited by the robot",
+            "the node ?x has been visited by the robot",
+            ""
+        ],
+        "annotation": []
+    }
+}

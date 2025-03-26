@@ -1,0 +1,205 @@
+
+
+####################
+Action: move_to_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+No predicate has been defined yet
+--------------------
+--------------------
+Okay, here's the PDDL representation of the "move to node" action, based on the provided domain information. I'm focusing on capturing the core constraints and effects.
+
+```pddl
+Action: move-to-node
+
+Parameters:
+1. ?current_node - node: The node the robot is currently at.
+2. ?next_node - node: The node the robot is moving to.
+
+Preconditions:
+```
+(and
+   (connected ?current_node ?next_node)
+   (network-contains ?current_node)
+   (network-contains ?next_node)
+   (not (visited ?next_node))
+   (robot-at ?current_node)
+)
+```
+
+Effects:
+```
+(and
+   (not (robot-at ?current_node))
+   (robot-at ?next_node)
+   (visited ?next_node)
+)
+```
+
+New Predicates:
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+```
+
+**Explanation and Reasoning:**
+
+*   **`connected ?current_node ?next_node`**: This is a fundamental precondition. The robot can only move if there's a direct connection (edge) between the current node and the target node.
+*   **`network-contains ?current_node` and `network-contains ?next_node`**:  Ensures that both the current and next nodes are part of the network.  This prevents the robot from trying to move to nodes outside the defined network.
+*   **`not (visited ?next_node)`**: This is crucial for the "visit each node exactly once" constraint. The robot can only move to a node if it hasn't already been visited in the current route.
+*   **`robot-at ?current_node`**: The robot must be at the current node to begin moving.
+*   **`not (robot-at ?current_node)`**: The robot is no longer at the current node after the move.
+*   **`robot-at ?next_node`**: The robot is now at the target node.
+*   **`visited ?next_node`**:  The target node is marked as visited.
+
+**Important Considerations and Potential Extensions:**
+
+*   **Route Completion:**  The problem description mentions completing the route.  This would likely require an additional predicate (e.g., `route-complete`) and a condition in the effects of a separate "route-complete" action.
+*   **Starting Node:**  You'd likely need a predicate to specify the robot's initial location (e.g., `initial-robot-location ?node`).
+*   **Edge Direction:** If edges are directed (one-way), the `connected` predicate would need to reflect that directionality.
+*   **Error Handling:**  You might want to add predicates and actions to handle situations where a valid move isn't possible (e.g., a "dead end").
+*   **Path Planning:** This action only handles a single move. A more complex system might involve a path planning action that determines a sequence of moves to reach a goal.
+
+
+
+####################
+Action: visit_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+--------------------
+--------------------
+```
+(and
+    (network-contains ?node)
+    (robot-at ?node)
+    (not (visited ?node))
+)
+```
+
+Effects:
+```
+(and
+   (visited ?node)
+)
+```
+
+New Predicates:
+No newly defined predicate
+```
+
+
+####################
+Action: unvisit_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+--------------------
+--------------------
+```
+(and
+   (visited ?node - node)
+)
+```
+
+Effects:
+```
+(and
+   (not (visited ?node - node))
+)
+```
+
+New Predicates:
+No newly defined predicate
+```
+
+
+####################
+Action: check_edge
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+--------------------
+--------------------
+```
+(and
+   (network-contains ?current-node - node)
+   (network-contains ?target-node - node)
+   (connected ?current-node - node ?target-node - node)
+)
+```
+
+Effects:
+```
+(and
+   (edge-checked ?current-node - node ?target-node - node)
+)
+```
+
+New Predicates:
+1. (edge-checked ?node1 - node ?node2 - node): true if the robot has checked if there is an edge connecting node ?node1 to node ?node2.
+```
+
+
+####################
+Action: end_route
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+5. (edge-checked ?node1 - node ?node2 - node): true if the robot has checked if there is an edge connecting node ?node1 to node ?node2.
+--------------------
+--------------------
+```pddl
+Action: complete-route
+
+Parameters:
+1. ?last-node - node: The last node in the route.
+
+Preconditions:
+```
+(and
+  (forall (?node - node) (implies (network-contains ?node) (visited ?node)))
+  (forall (?node1 - node ?node2 - node) (imply (edge-checked ?node1 ?node2) (not (connected ?node1 ?node2))))
+  (robot-at ?last-node)
+)
+```
+
+Effects:
+```
+(and
+  (not (robot-at ?last-node))
+  (route-complete)
+)
+```
+
+New Predicates:
+1. (route-complete): true if the robot has completed the route.
+```
+
+--------------------
+Extracted predicates:
+
+1. (connected ?node1 - node ?node2 - node): true if there is an edge connecting node ?node1 to node ?node2.
+2. (network-contains ?node - node): true if the network contains the node ?node.
+3. (robot-at ?node - node): true if the robot is currently at the node ?node.
+4. (visited ?node - node): true if the node ?node has been visited in the current route.
+5. (edge-checked ?node1 - node ?node2 - node): true if the robot has checked if there is an edge connecting node ?node1 to node ?node2.
+6. (route-complete): true if the robot has completed the route.

@@ -1,0 +1,77 @@
+
+
+####################
+Action: move_to_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+No predicate has been defined yet
+--------------------
+--------------------
+1. ?from_node - node: the node the robot is currently at
+2. ?to_node - node: the node the robot is moving to
+
+Preconditions:
+```
+(and
+   (robot-at ?from_node)
+   (edge-exists ?from_node ?to_node)
+   (node-unvisited ?to_node)
+)
+```
+
+Effects:
+```
+(and
+   (not (robot-at ?from_node))
+   (not (node-unvisited ?to_node))
+   (robot-at ?to_node)
+)
+```
+
+New Predicates:
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+
+
+
+####################
+Action: visit_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+--------------------
+--------------------
+1. ?x - node: the node to visit
+
+Preconditions:
+```
+(and
+   (robot-at ?x)
+   (node-unvisited ?x)
+)
+```
+
+Effects:
+```
+(and
+   (not (node-unvisited ?x))
+   (node-visited ?x)
+)
+```
+
+New Predicates:
+1. (node-visited ?x - node): True if node ?x has been visited by the robot.
+
+
+--------------------
+Extracted predicates:
+
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+4. (node-visited ?x - node): True if node ?x has been visited by the robot.

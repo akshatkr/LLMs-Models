@@ -1,6 +1,6 @@
 {
   "move_to_node": {
-    "desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node.",
+    "desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node. Once the robot moves ",
     "extra_info": [
       "The robot can only move along edges that are part of the network.",
       "The robot must be at a valid node to begin moving."
@@ -11,13 +11,6 @@
     "extra_info": [
       "This action cannot be performed if the node has already been visited.",
       "Visiting a node is necessary to complete the route."
-    ]
-  },
-  "end_route": {
-    "desc": "The robot completes its route by reaching the last node in the path, ensuring that all nodes have been visited exactly once.",
-    "extra_info": [
-      "The robot must have visited all nodes before performing this action.",
-      "This action signifies the completion of the route."
     ]
   }
 }

@@ -1,0 +1,46 @@
+{
+    "move_to_node": {
+        "action_desc": "The robot moves to the specified node in the network, provided there is an edge connecting the current node to the target node. The robot can only move along edges that are part of the network. The robot must be at a valid node to begin moving.",
+        "llm_output": "1. ?x - node: the current node\n2. ?y - node: the target node\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (edge-exists ?x ?y)\n   (not (node-visited ?y))\n)\n```\n\nEffects:\n```\n(and\n   (not (robot-at ?x))\n   (robot-at ?y)\n   (node-visited ?y)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "an edge exists between node ?x and node ?y",
+            "node ?y has not been visited by the robot"
+        ],
+        "translated_effects": [
+            "the robot is not at node ?x",
+            "the robot is at node ?y",
+            "node ?y has been visited by the robot",
+            ""
+        ],
+        "annotation": []
+    },
+    "visit_node": {
+        "action_desc": "The robot visits the node, marking it as visited in the route. The robot can only visit each node once. This action cannot be performed if the node has already been visited. Visiting a node is necessary to complete the route.",
+        "llm_output": "1. ?x - node: the node to visit\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (not (node-visited ?x))\n)\n```\n\nEffects:\n```\n(and\n   (node-visited ?x)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "node ?x has not been visited by the robot",
+            ""
+        ],
+        "translated_effects": [
+            "the node ?x has been visited by the robot",
+            ""
+        ],
+        "annotation": []
+    },
+    "end_route": {
+        "action_desc": "The robot completes its route by reaching the last node in the path, ensuring that all nodes have been visited exactly once. The robot must have visited all nodes before performing this action. This action signifies the completion of the route.",
+        "llm_output": "1. ?x - node: the last node the robot reaches to complete the route\n\nPreconditions:\n```\n(and\n   (robot-at ?x)\n   (forall (?n - node) (node-visited ?n))\n)\n```\n\nEffects:\n```\n(and\n   (route-completed)\n)\n```\n\nNew Predicates:\nNo newly defined predicate\n",
+        "translated_preconditions": [
+            "the robot is currently at node ?x",
+            "for all nodes ?n, node ?n has been visited by the robot",
+            ""
+        ],
+        "translated_effects": [
+            "the route is completed",
+            ""
+        ],
+        "annotation": []
+    }
+}

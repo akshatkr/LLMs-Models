@@ -1,0 +1,79 @@
+
+
+####################
+Action: move_to_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+4. (node-visited ?x - node): True if node ?x has been visited by the robot.
+--------------------
+--------------------
+1. ?x - node: the current node
+2. ?y - node: the target node
+
+Preconditions:
+```
+(and
+   (robot-at ?x)
+   (edge-exists ?x ?y)
+   (node-unvisited ?y)
+)
+```
+
+Effects:
+```
+(and
+   (not (robot-at ?x))
+   (not (node-unvisited ?y))
+   (node-visited ?y)
+   (robot-at ?y)
+)
+```
+
+New Predicates:
+No newly defined predicate
+
+
+
+####################
+Action: visit_node
+####################
+--------------------
+You can create and define new predicates, but you may also reuse the following predicates:
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+4. (node-visited ?x - node): True if node ?x has been visited by the robot.
+--------------------
+--------------------
+1. ?x - node: the node to visit
+
+Preconditions:
+```
+(and
+   (robot-at ?x)
+   (node-unvisited ?x)
+)
+```
+
+Effects:
+```
+(and
+   (not (node-unvisited ?x))
+   (node-visited ?x)
+)
+```
+
+New Predicates:
+No newly defined predicate
+
+--------------------
+Extracted predicates:
+
+1. (robot-at ?x - node): True if the robot is currently at node ?x.
+2. (edge-exists ?x - node ?y - node): True if there is an edge connecting node ?x to node ?y.
+3. (node-unvisited ?x - node): True if node ?x has not been visited by the robot yet.
+4. (node-visited ?x - node): True if node ?x has been visited by the robot.
